@@ -1,9 +1,6 @@
 # ruby-openssl-pqc-test
 
-This repository is to test [Ruby OpenSSL] with post-quantum cryptography related to [this blog][Red Hat blog PQC].
-
-[Ruby OpenSSL]: https://github.com/ruby/openssl
-[Red Hat blog PQC]: https://www.redhat.com/en/blog/post-quantum-cryptography-red-hat-enterprise-linux-10
+This repository is to test [Ruby OpenSSL] in the [post-quantum cryptography][NIST Post Quantum Cryptography] cases. I referred to [this Red Hat blog about post-quantum cryptography in RHEL 10][Red Hat blog PQC RHEL 10] for details.
 
 ## Usage
 
@@ -71,3 +68,7 @@ SSL Version: TLSv1.3
 Cert:
 Cipher: ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256, 256]
 ```
+
+[Ruby OpenSSL]: https://github.com/ruby/openssl
+[NIST Post Quantum Cryptography]: https://csrc.nist.gov/projects/post-quantum-cryptography/post-quantum-cryptography-standardization
+[Red Hat blog PQC RHEL 10]: https://www.redhat.com/en/blog/post-quantum-cryptography-red-hat-enterprise-linux-10
