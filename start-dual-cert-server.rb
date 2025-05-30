@@ -22,9 +22,9 @@ begin
       # pp ssl_connection, ssl_server
       puts "Client sent data:\n#{data.dump}" if data
     ensure
-      ssl_connection.close
+      ssl_connection.close if ssl_connection
     end
   end
 ensure
-  tcp_server.close
+  tcp_server.close if tcp_server
 end
