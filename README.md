@@ -20,6 +20,8 @@ Generate private keys and certificates used in this test.
 $ ./pqc.sh generate-keys-certs
 ```
 
+### Test with shell scripts
+
 Start TLS server with dual certificates ML-DSA and RSA.
 
 ```
@@ -49,4 +51,23 @@ Peer signature type: rsa_pss_rsae_sha256
 Negotiated TLS1.3 group: X25519MLKEM768
 ...
 OK
+```
+
+### Test with Ruby scripts
+
+Start TLS server with dual certificates ML-DSA and RSA.
+
+Set the library path option (`-I`) to the Ruby OpenSSL.
+
+```
+$ ruby -I$/path/to/ruby/openssl/lib start-dual-cert-server.rb
+```
+
+Connect to the server with ML-DSA.
+
+```
+$ ruby -I/path/to/ruby/openssl/lib connect-mldsa.rb
+SSL Version: TLSv1.3
+Cert:
+Cipher: ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256, 256]
 ```
