@@ -1,0 +1,5 @@
+*.log
+*.swp
+*~
+/localhost-*.crt
+/localhost-*.key
