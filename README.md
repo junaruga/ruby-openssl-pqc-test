@@ -200,5 +200,5 @@ CONNECTION CLOSED
 ```
 
 [Ruby OpenSSL]: https://github.com/ruby/openssl
-[NIST Post Quantum Cryptography]: https://csrc.nist.gov/projects/post-quantum-cryptography/post-quantum-cryptography-standardization
+[NIST Post Quantum Cryptography]: https://csrc.nist.gov/projects/post-quantum-cryptography
 [Red Hat blog PQC RHEL 10]: https://www.redhat.com/en/blog/post-quantum-cryptography-red-hat-enterprise-linux-10
