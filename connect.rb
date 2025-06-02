@@ -19,7 +19,7 @@ ssl_sock = nil
 begin
   tcp_sock = TCPSocket.new("127.0.0.1", 4433)
   ctx = OpenSSL::SSL::SSLContext.new
-  cert = OpenSSL::X509::Certificate.new File.read("localhost-#{crypto}.crt")
+  cert = OpenSSL::X509::Certificate.new(File.read("localhost-#{crypto}.crt"))
   ctx.cert = cert
   ctx.key = nil
   ssl_sock = OpenSSL::SSL::SSLSocket.new(tcp_sock, ctx)
