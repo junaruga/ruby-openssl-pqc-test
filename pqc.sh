@@ -45,6 +45,16 @@ function start-server-with-dual-certificates {
         -dcert localhost-rsa.crt -dkey localhost-rsa.key
 }
 
+function start-server-with-mldsa-certificate {
+    "${OPENSSL_CLI}" s_server \
+        -cert localhost-mldsa.crt -key localhost-mldsa.key
+}
+
+function start-server-with-rsa-certificate {
+    "${OPENSSL_CLI}" s_server \
+        -cert localhost-rsa.crt -key localhost-rsa.key
+}
+
 function connect-mldsa {
     "${OPENSSL_CLI}" s_client \
         -connect localhost:4433 \
@@ -70,6 +80,12 @@ generate-keys-certs)
     ;;
 start-dual-cert-server)
     start-server-with-dual-certificates
+    ;;
+start-mldsa-cert-server)
+    start-server-with-mldsa-certificate
+    ;;
+start-rsa-cert-server)
+    start-server-with-rsa-certificate
     ;;
 connect-mldsa)
     connect-mldsa
