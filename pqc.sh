@@ -13,6 +13,8 @@ Commands
     script.
   * start-dual-cert-server: Start TLS server with dual certificates ML-DSA
     and RSA.
+  * start-mldsa-cert-server: Start TLS server with ML-DSA.
+  * start-rsa-cert-server: Start TLS server with RSA.
   * connect-mldsa: Connect to the server with ML-DSA.
   * connect-rsa: Connect to the server with RSA.
 EOF
