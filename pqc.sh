@@ -30,7 +30,7 @@ function generate-keys-certs {
         -addext subjectAltName=DNS:localhost \
         -nodes \
         -out localhost-mldsa.crt
-    # RSA 20548 bits: Not supported as post-quantum cryptography.
+    # RSA 2048 bits: Not supported as post-quantum cryptography.
     "${OPENSSL_CLI}" req \
         -x509 \
         -newkey rsa:2048 \
