@@ -21,10 +21,10 @@ begin
   ctx = OpenSSL::SSL::SSLContext.new
   case crypto
   when "mldsa"
-   nil
+    nil
   when "rsa"
-   ctx.client_sigalgs = "rsa_pss_pss_sha256:rsa_pss_rsae_sha256"
-   # ctx.client_sigalgs = "RSA-PSS+SHA256"
+    ctx.client_sigalgs = "rsa_pss_pss_sha256:rsa_pss_rsae_sha256"
+    # ctx.client_sigalgs = "RSA-PSS+SHA256"
   else
     print_usage
     raise
