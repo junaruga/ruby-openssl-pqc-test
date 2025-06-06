@@ -16,7 +16,11 @@ Commands
   * start-mldsa-cert-server: Start TLS server with ML-DSA.
   * start-rsa-cert-server: Start TLS server with RSA.
   * connect-mldsa: Connect to the server with ML-DSA.
+  * connect-mldsa-classic: Connect to the server with ML-DSA and classic key
+    exchange.
   * connect-rsa: Connect to the server with RSA.
+  * connect-rsa-classic: Connect to the server with RSA and classic key
+    exchange.
 EOF
 }
 
@@ -63,11 +67,30 @@ function connect_mldsa {
         -CAfile localhost-mldsa.crt </dev/null
 }
 
+# Force the use of classic key exchange.
+function connect_mldsa_classic {
+    "${OPENSSL_CLI}" s_client \
+        -connect localhost:4433 \
+        -CAfile localhost-mldsa.crt \
+        -groups 'X25519:secp256r1:X448:secp521r1:secp384r1' \
+        </dev/null
+}
+
 function connect_rsa {
     "${OPENSSL_CLI}" s_client \
         -connect localhost:4433 \
         -CAfile localhost-rsa.crt \
         -sigalgs 'rsa_pss_pss_sha256:rsa_pss_rsae_sha256' </dev/null
+}
+
+# Force the use of classic key exchange.
+function connect_rsa_classic {
+    "${OPENSSL_CLI}" s_client \
+        -connect localhost:4433 \
+        -CAfile localhost-rsa.crt \
+        -sigalgs 'rsa_pss_pss_sha256:rsa_pss_rsae_sha256' \
+        -groups 'X25519:secp256r1:X448:secp521r1:secp384r1' \
+        </dev/null
 }
 
 if [ "${#}" -lt 1 ]; then
@@ -92,8 +115,14 @@ start-rsa-cert-server)
 connect-mldsa)
     connect_mldsa
     ;;
+connect-mldsa-classic)
+    connect_mldsa_classic
+    ;;
 connect-rsa)
     connect_rsa
+    ;;
+connect-rsa-classic)
+    connect_rsa_classic
     ;;
 *)
     print_usage
