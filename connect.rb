@@ -23,7 +23,9 @@ begin
   when "mldsa"
     nil
   when "rsa"
-    ctx.sigalgs = "rsa_pss_pss_sha256:rsa_pss_rsae_sha256"
+    ctx.sigalgs = "rsa_pss_rsae_sha256"
+  when "rsa-pss"
+    ctx.sigalgs = "rsa_pss_pss_sha256"
   else
     print_usage
     raise
