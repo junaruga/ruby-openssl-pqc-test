@@ -4,7 +4,7 @@ set -eux -o pipefail
 
 OPENSSL_CLI="$HOME/.local/openssl-3.6.0-dev-fips-debug-10bd6fa8ca/bin/openssl"
 
-function usage {
+function print_usage {
     cat <<EOF
 Usage: ${0} command
 
@@ -20,7 +20,7 @@ Commands
 EOF
 }
 
-function generate-keys-certs {
+function generate_keys_certs {
     # ML-DSA-65, supported as post-quantum cryptography.
     "${OPENSSL_CLI}" req \
         -x509 \
@@ -41,29 +41,29 @@ function generate-keys-certs {
         -out localhost-rsa.crt
 }
 
-function start-server-with-dual-certificates {
+function start_server_with_dual_certificates {
     "${OPENSSL_CLI}" s_server \
         -cert localhost-mldsa.crt -key localhost-mldsa.key \
         -dcert localhost-rsa.crt -dkey localhost-rsa.key
 }
 
-function start-server-with-mldsa-certificate {
+function start_server_with_mldsa_certificate {
     "${OPENSSL_CLI}" s_server \
         -cert localhost-mldsa.crt -key localhost-mldsa.key
 }
 
-function start-server-with-rsa-certificate {
+function start_server_with_rsa_certificate {
     "${OPENSSL_CLI}" s_server \
         -cert localhost-rsa.crt -key localhost-rsa.key
 }
 
-function connect-mldsa {
+function connect_mldsa {
     "${OPENSSL_CLI}" s_client \
         -connect localhost:4433 \
         -CAfile localhost-mldsa.crt </dev/null
 }
 
-function connect-rsa {
+function connect_rsa {
     "${OPENSSL_CLI}" s_client \
         -connect localhost:4433 \
         -CAfile localhost-rsa.crt \
@@ -71,32 +71,32 @@ function connect-rsa {
 }
 
 if [ "${#}" -lt 1 ]; then
-    usage
+    print_usage
     exit 1
 fi
 
 cmd="${1}"
 case "${cmd}" in
 generate-keys-certs)
-    generate-keys-certs
+    generate_keys_certs
     ;;
 start-dual-cert-server)
-    start-server-with-dual-certificates
+    start_server_with_dual_certificates
     ;;
 start-mldsa-cert-server)
-    start-server-with-mldsa-certificate
+    start_server_with_mldsa_certificate
     ;;
 start-rsa-cert-server)
-    start-server-with-rsa-certificate
+    start_server_with_rsa_certificate
     ;;
 connect-mldsa)
-    connect-mldsa
+    connect_mldsa
     ;;
 connect-rsa)
-    connect-rsa
+    connect_rsa
     ;;
 *)
-    usage
+    print_usage
     exit 2
 esac
 
