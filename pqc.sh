@@ -13,6 +13,9 @@ Commands
     script.
   * start-dual-cert-server: Start TLS server with dual certificates ML-DSA
     and RSA.
+  * start-dual-cert-mldsa-and-rsa-server: Alias of start-dual-cert-server.
+  * start-dual-cert-mldsa-and-rsa-pss-server: Start TLS server with dual
+    certificates ML-DSA and RSA-PSS.
   * start-mldsa-cert-server: Start TLS server with ML-DSA.
   * start-rsa-cert-server: Start TLS server with RSA.
   * connect-mldsa: Connect to the server with ML-DSA.
@@ -21,6 +24,7 @@ Commands
   * connect-rsa: Connect to the server with RSA.
   * connect-rsa-classic: Connect to the server with RSA and classic key
     exchange.
+  * connect-rsa-pss: Connect to the server with RSA-PSS.
 EOF
 }
 
@@ -34,7 +38,7 @@ function generate_keys_certs {
         -addext subjectAltName=DNS:localhost \
         -nodes \
         -out localhost-mldsa.crt
-    # RSA 2048 bits: Not supported as post-quantum cryptography.
+    # RSA-PKCS#1v1.5 2048 bits: Not supported as post-quantum cryptography.
     "${OPENSSL_CLI}" req \
         -x509 \
         -newkey rsa:2048 \
@@ -43,12 +47,27 @@ function generate_keys_certs {
         -addext subjectAltName=DNS:localhost \
         -nodes \
         -out localhost-rsa.crt
+    # RSA-PSS 2048 bits: Not supported as post-quantum cryptography.
+    "${OPENSSL_CLI}" req \
+        -x509 \
+        -newkey rsa-pss:2048 \
+        -keyout localhost-rsa-pss.key \
+        -subj /CN=localhost \
+        -addext subjectAltName=DNS:localhost \
+        -nodes \
+        -out localhost-rsa-pss.crt
 }
 
 function start_server_with_dual_certificates {
     "${OPENSSL_CLI}" s_server \
         -cert localhost-mldsa.crt -key localhost-mldsa.key \
         -dcert localhost-rsa.crt -dkey localhost-rsa.key
+}
+
+function start_server_with_dual_mldsa_and_rsa_pss_certificates {
+    "${OPENSSL_CLI}" s_server \
+        -cert localhost-mldsa.crt -key localhost-mldsa.key \
+        -dcert localhost-rsa-pss.crt -dkey localhost-rsa-pss.key
 }
 
 function start_server_with_mldsa_certificate {
@@ -80,7 +99,7 @@ function connect_rsa {
     "${OPENSSL_CLI}" s_client \
         -connect localhost:4433 \
         -CAfile localhost-rsa.crt \
-        -sigalgs 'rsa_pss_pss_sha256:rsa_pss_rsae_sha256' </dev/null
+        -sigalgs 'rsa_pss_rsae_sha256' </dev/null
 }
 
 # Force the use of classic key exchange.
@@ -88,9 +107,16 @@ function connect_rsa_classic {
     "${OPENSSL_CLI}" s_client \
         -connect localhost:4433 \
         -CAfile localhost-rsa.crt \
-        -sigalgs 'rsa_pss_pss_sha256:rsa_pss_rsae_sha256' \
+        -sigalgs 'rsa_pss_rsae_sha256' \
         -groups 'X25519:secp256r1:X448:secp521r1:secp384r1' \
         </dev/null
+}
+
+function connect_rsa_pss {
+    "${OPENSSL_CLI}" s_client \
+        -connect localhost:4433 \
+        -CAfile localhost-rsa-pss.crt \
+        -sigalgs 'rsa_pss_pss_sha256' </dev/null
 }
 
 if [ "${#}" -lt 1 ]; then
@@ -103,8 +129,11 @@ case "${cmd}" in
 generate-keys-certs)
     generate_keys_certs
     ;;
-start-dual-cert-server)
+start-dual-cert-mldsa-and-rsa-server | start-dual-cert-server)
     start_server_with_dual_certificates
+    ;;
+start-dual-cert-mldsa-and-rsa-pss-server)
+    start_server_with_dual_mldsa_and_rsa_pss_certificates
     ;;
 start-mldsa-cert-server)
     start_server_with_mldsa_certificate
@@ -123,6 +152,9 @@ connect-rsa)
     ;;
 connect-rsa-classic)
     connect_rsa_classic
+    ;;
+connect-rsa-pss)
+    connect_rsa_pss
     ;;
 *)
     print_usage
