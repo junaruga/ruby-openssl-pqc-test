@@ -175,12 +175,14 @@ CONNECTION CLOSED
 
 ### Test TLS dual certificates server implemented in Ruby.
 
+#### TLS group: X25519MLKEM768
+
 Start TLS server with dual certificates ML-DSA and RSA.
 
 Set the library path option (`-I`) to the Ruby OpenSSL.
 
 ```
-$ ruby -I$/path/to/ruby/openssl/lib start_dual_cert_server.rb
+$ ruby -I/path/to/ruby/openssl/lib start_dual_cert_server.rb
 ```
 
 Connect to the server with ML-DSA.
@@ -206,7 +208,40 @@ Negotiated TLS1.3 group: X25519MLKEM768
 OK
 ```
 
+#### TLS group: SecP256r1MLKEM768
+
+Start TLS server with dual certificates ML-DSA and RSA.
+
+```
+$ ruby -I/path/to/ruby/openssl/lib start_dual_cert_server.rb SecP256r1MLKEM768
+```
+
+Connect to the server with ML-DSA.
+
+```
+$ ./pqc.sh connect-mldsa-SecP256r1MLKEM768
+...
+Peer signature type: mldsa65
+Negotiated TLS1.3 group: SecP256r1MLKEM768
+...
+OK
+```
+
+Connect to the server with RSA.
+
+```
+$ ./pqc.sh connect-rsa-SecP256r1MLKEM768
+...
+Peer signing digest: SHA256
+Peer signature type: rsa_pss_rsae_sha256
+Negotiated TLS1.3 group: SecP256r1MLKEM768
+...
+OK
+```
+
 ### Test the clients implemented in Ruby.
+
+#### TLS group: X25519MLKEM768
 
 Start TLS server with dual certificates ML-DSA and RSA.
 
@@ -271,6 +306,74 @@ Signature Algorithms: RSA-PSS+SHA256
 Shared Signature Algorithms: RSA-PSS+SHA256
 Supported groups: X25519MLKEM768:x25519:secp256r1:x448:secp384r1:secp521r1:ffdhe2048:ffdhe3072
 Shared groups: X25519MLKEM768:x25519:secp256r1:x448:secp384r1:secp521r1:ffdhe2048:ffdhe3072
+CIPHER is TLS_AES_256_GCM_SHA384
+This TLS version forbids renegotiation.
+DONE
+shutting down SSL
+CONNECTION CLOSED
+```
+
+#### TLS group: SecP256r1MLKEM768
+
+```
+$ ./pqc.sh start-dual-cert-mldsa-and-rsa-server-SecP256r1MLKEM768
+...
+ACCEPT
+```
+
+Connect to the server with ML-DSA.
+
+```
+$ ruby -I/path/to/ruby/openssl/lib connect.rb mldsa SecP256r1MLKEM768
+SSL Version: TLSv1.3
+Cert:
+Cipher: ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256, 256]
+```
+
+Then the TLS server prints the following lines.
+
+```
+$ ./pqc.sh start-dual-cert-server
+...
+-----BEGIN SSL SESSION PARAMETERS-----
+MIGEAgEBAgIDBAQCEwIEIIBE94AiqaFxk1nEivsGkrPbqMVABZ5VHEn8ZYkhTv2J
+BDDuFiJ9u1HpA3b/74VTu+5jFZBNSoL9fA7NWjoHeGgL0BezTqhQK+mE2a+kxEeE
+YC+hBgIEaEwmeqIEAgIcIKQGBAQBAAAArgcCBQCPvV4uswQCAhHr
+-----END SSL SESSION PARAMETERS-----
+Shared ciphers:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:DHE-RSA-AES256-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES128-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA
+Signature Algorithms: id-ml-dsa-65:id-ml-dsa-87:id-ml-dsa-44:ECDSA+SHA256:ECDSA+SHA384:ECDSA+SHA512:ed25519:ed448:ecdsa_brainpoolP256r1_sha256:ecdsa_brainpoolP384r1_sha384:ecdsa_brainpoolP512r1_sha512:rsa_pss_pss_sha256:rsa_pss_pss_sha384:rsa_pss_pss_sha512:RSA-PSS+SHA256:RSA-PSS+SHA384:RSA-PSS+SHA512:RSA+SHA256:RSA+SHA384:RSA+SHA512:ECDSA+SHA224:RSA+SHA224:DSA+SHA224:DSA+SHA256:DSA+SHA384:DSA+SHA512
+Shared Signature Algorithms: id-ml-dsa-65:id-ml-dsa-87:id-ml-dsa-44:ECDSA+SHA256:ECDSA+SHA384:ECDSA+SHA512:ed25519:ed448:ecdsa_brainpoolP256r1_sha256:ecdsa_brainpoolP384r1_sha384:ecdsa_brainpoolP512r1_sha512:rsa_pss_pss_sha256:rsa_pss_pss_sha384:rsa_pss_pss_sha512:RSA-PSS+SHA256:RSA-PSS+SHA384:RSA-PSS+SHA512:RSA+SHA256:RSA+SHA384:RSA+SHA512:ECDSA+SHA224:RSA+SHA224
+Supported groups: SecP256r1MLKEM768
+Shared groups: SecP256r1MLKEM768
+CIPHER is TLS_AES_256_GCM_SHA384
+This TLS version forbids renegotiation.
+DONE
+shutting down SSL
+CONNECTION CLOSED
+```
+
+Connect to the server with RSA.
+
+```
+$ ruby -I/path/to/ruby/openssl/lib connect.rb rsa SecP256r1MLKEM768
+SSL Version: TLSv1.3
+Cert:
+Cipher: ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256, 256]
+```
+
+Then the TLS server prints the following lines.
+
+```
+-----BEGIN SSL SESSION PARAMETERS-----
+MIGEAgEBAgIDBAQCEwIEINr27R++pC6rrnBONsTDl9UxOIRpLm3VIbmC/y2v20EK
+BDC1FEdgKZxR7uzFLEwHUNzR3FgEZ8iG0vDOBCNqOt4+BCfZlNS9tTRNkPDWxv27
+zOyhBgIEaEwnAaIEAgIcIKQGBAQBAAAArgcCBQDaDO1AswQCAhHr
+-----END SSL SESSION PARAMETERS-----
+Shared ciphers:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-CHACHA20-POLY1305:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-SHA384:DHE-RSA-AES256-SHA256:ECDHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES128-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA
+Signature Algorithms: RSA-PSS+SHA256
+Shared Signature Algorithms: RSA-PSS+SHA256
+Supported groups: SecP256r1MLKEM768
+Shared groups: SecP256r1MLKEM768
 CIPHER is TLS_AES_256_GCM_SHA384
 This TLS version forbids renegotiation.
 DONE
