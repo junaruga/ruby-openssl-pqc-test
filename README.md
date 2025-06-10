@@ -180,7 +180,7 @@ Start TLS server with dual certificates ML-DSA and RSA.
 Set the library path option (`-I`) to the Ruby OpenSSL.
 
 ```
-$ ruby -I$/path/to/ruby/openssl/lib start-dual-cert-server.rb
+$ ruby -I$/path/to/ruby/openssl/lib start_dual_cert_server.rb
 ```
 
 Connect to the server with ML-DSA.

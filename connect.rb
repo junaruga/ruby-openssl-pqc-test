@@ -1,31 +1,33 @@
+# frozen_string_literal: true
+
 require 'openssl'
 require 'socket'
 
 def print_usage
-  puts <<EOF
-Usage #{$PROGRAM_NAME} [mldsa|rsa]
-EOF
+  puts <<~USAGE
+    Usage #{$PROGRAM_NAME} [mldsa|rsa]
+  USAGE
 end
 
-if ARGV.length < 1
+if ARGV.empty?
   print_usage
   abort
 end
-crypto=ARGV[0]
+crypto = ARGV[0]
 # puts "crypto: #{crypto}"
 
 tcp_sock = nil
 ssl_sock = nil
 begin
-  tcp_sock = TCPSocket.new("127.0.0.1", 4433)
+  tcp_sock = TCPSocket.new('127.0.0.1', 4433)
   ctx = OpenSSL::SSL::SSLContext.new
   case crypto
-  when "mldsa"
+  when 'mldsa'
     nil
-  when "rsa"
-    ctx.sigalgs = "rsa_pss_rsae_sha256"
-  when "rsa-pss"
-    ctx.sigalgs = "rsa_pss_pss_sha256"
+  when 'rsa'
+    ctx.sigalgs = 'rsa_pss_rsae_sha256'
+  when 'rsa-pss'
+    ctx.sigalgs = 'rsa_pss_pss_sha256'
   else
     print_usage
     raise
@@ -40,6 +42,6 @@ begin
   puts "Cert: #{ssl_sock.cert}"
   puts "Cipher: #{ssl_sock.cipher}"
 ensure
-  ssl_sock.close if ssl_sock
-  tcp_sock.close if tcp_sock
+  ssl_sock&.close
+  tcp_sock&.close
 end
