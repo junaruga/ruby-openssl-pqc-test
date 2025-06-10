@@ -5,7 +5,7 @@ require 'socket'
 
 def print_usage
   puts <<~USAGE
-    Usage #{$PROGRAM_NAME} [mldsa|rsa]
+    Usage #{$PROGRAM_NAME} [mldsa|rsa] [group]
   USAGE
 end
 
@@ -14,7 +14,13 @@ if ARGV.empty?
   abort
 end
 crypto = ARGV[0]
+if ARGV.length >= 2
+  group = ARGV[1]
+else
+  group = 'X25519MLKEM768'
+end
 # puts "crypto: #{crypto}"
+# puts "group: #{group}"
 
 tcp_sock = nil
 ssl_sock = nil
@@ -32,6 +38,16 @@ begin
     print_usage
     raise
   end
+  case group
+  when 'X25519MLKEM768'
+    nil
+  when 'SecP256r1MLKEM768', 'SecP384r1MLKEM1024'
+    ctx.ecdh_curves = group
+  else
+    print_usage
+    raise
+  end
+
   ctx.ca_file = "localhost-#{crypto}.crt"
 
   ssl_sock = OpenSSL::SSL::SSLSocket.new(tcp_sock, ctx)
