@@ -173,6 +173,83 @@ shutting down SSL
 CONNECTION CLOSED
 ```
 
+#### TLS group: SecP384r1MLKEM1024
+
+Start TLS server with dual certificates ML-DSA and RSA, and TLS group SecP384r1MLKEM1024.
+
+```
+$ ./pqc.sh start-dual-cert-mldsa-and-rsa-server-SecP384r1MLKEM1024
+...
+ACCEPT
+```
+
+Connect to the server with ML-DSA, and TLS group SecP384r1MLKEM1024.
+
+```
+$ ./pqc.sh connect-mldsa-SecP384r1MLKEM1024
+...
+Peer signature type: mldsa65
+Negotiated TLS1.3 group: SecP384r1MLKEM1024
+...
+OK
+```
+
+Then the TLS server prints the following lines.
+
+```
+$ ./pqc.sh start-dual-cert-mldsa-and-rsa-server-SecP384r1MLKEM1024
+...
+-----BEGIN SSL SESSION PARAMETERS-----
+MIGEAgEBAgIDBAQCEwIEID2RuZQrUbuagrxPXUA/SAfP+z0ZXb5yDt7gPtzrP+wV
+BDBwoLJaLP9Da/2+pHegNB59O4bsPJo59WRYL0yFOiW0rVB+xJ8Y2Bx1EPQGS02Z
+1QqhBgIEaEw71aIEAgIcIKQGBAQBAAAArgcCBQCapricswQCAhHt
+-----END SSL SESSION PARAMETERS-----
+Shared ciphers:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:DHE-RSA-AES256-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES128-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA
+Signature Algorithms: id-ml-dsa-65:id-ml-dsa-87:id-ml-dsa-44:ECDSA+SHA256:ECDSA+SHA384:ECDSA+SHA512:ed25519:ed448:ecdsa_brainpoolP256r1_sha256:ecdsa_brainpoolP384r1_sha384:ecdsa_brainpoolP512r1_sha512:rsa_pss_pss_sha256:rsa_pss_pss_sha384:rsa_pss_pss_sha512:RSA-PSS+SHA256:RSA-PSS+SHA384:RSA-PSS+SHA512:RSA+SHA256:RSA+SHA384:RSA+SHA512:ECDSA+SHA224:RSA+SHA224:DSA+SHA224:DSA+SHA256:DSA+SHA384:DSA+SHA512
+Shared Signature Algorithms: id-ml-dsa-65:id-ml-dsa-87:id-ml-dsa-44:ECDSA+SHA256:ECDSA+SHA384:ECDSA+SHA512:ed25519:ed448:ecdsa_brainpoolP256r1_sha256:ecdsa_brainpoolP384r1_sha384:ecdsa_brainpoolP512r1_sha512:rsa_pss_pss_sha256:rsa_pss_pss_sha384:rsa_pss_pss_sha512:RSA-PSS+SHA256:RSA-PSS+SHA384:RSA-PSS+SHA512:RSA+SHA256:RSA+SHA384:RSA+SHA512:ECDSA+SHA224:RSA+SHA224
+Supported groups: SecP384r1MLKEM1024
+Shared groups: SecP384r1MLKEM1024
+CIPHER is TLS_AES_256_GCM_SHA384
+This TLS version forbids renegotiation.
+DONE
+shutting down SSL
+CONNECTION CLOSED
+```
+
+Connect to the server with RSA, and TLS group SecP384r1MLKEM1024.
+
+```
+$ ./pqc.sh connect-rsa-SecP384r1MLKEM1024
+...
+Peer signing digest: SHA256
+Peer signature type: rsa_pss_rsae_sha256
+Negotiated TLS1.3 group: SecP384r1MLKEM1024
+...
+OK
+```
+
+Then the TLS server prints the following lines.
+
+```
+$ ./pqc.sh start-dual-cert-mldsa-and-rsa-server-SecP384r1MLKEM1024
+...
+-----BEGIN SSL SESSION PARAMETERS-----
+MIGDAgEBAgIDBAQCEwIEIEESnvd5+bDPMtQ3Ki5DA/Mh0tSOzTpLTqXIxnrxBUuB
+BDBwVa1iitpLml9986E/2goIf4Fd0/39FlnUCj4LF9sxf9YO7AATrCqnwsj96xvk
+4IuhBgIEaEw8vqIEAgIcIKQGBAQBAAAArgYCBDixsI6zBAICEe0=
+-----END SSL SESSION PARAMETERS-----
+Shared ciphers:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-CHACHA20-POLY1305:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-SHA384:DHE-RSA-AES256-SHA256:ECDHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES128-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA
+Signature Algorithms: RSA-PSS+SHA256
+Shared Signature Algorithms: RSA-PSS+SHA256
+Supported groups: SecP384r1MLKEM1024
+Shared groups: SecP384r1MLKEM1024
+CIPHER is TLS_AES_256_GCM_SHA384
+This TLS version forbids renegotiation.
+DONE
+shutting down SSL
+CONNECTION CLOSED
+```
+
 ### Test TLS dual certificates server implemented in Ruby.
 
 #### TLS group: X25519MLKEM768
@@ -235,6 +312,37 @@ $ ./pqc.sh connect-rsa-SecP256r1MLKEM768
 Peer signing digest: SHA256
 Peer signature type: rsa_pss_rsae_sha256
 Negotiated TLS1.3 group: SecP256r1MLKEM768
+...
+OK
+```
+
+#### TLS group: SecP384r1MLKEM1024
+
+Start TLS server with dual certificates ML-DSA and RSA.
+
+```
+$ ruby -I/path/to/ruby/openssl/lib start_dual_cert_server.rb SecP384r1MLKEM1024
+```
+
+Connect to the server with ML-DSA.
+
+```
+$ ./pqc.sh connect-mldsa-SecP384r1MLKEM1024
+...
+Peer signature type: mldsa65
+Negotiated TLS1.3 group: SecP384r1MLKEM1024
+...
+OK
+```
+
+Connect to the server with RSA.
+
+```
+$ ./pqc.sh connect-rsa-SecP384r1MLKEM1024
+...
+Peer signing digest: SHA256
+Peer signature type: rsa_pss_rsae_sha256
+Negotiated TLS1.3 group: SecP384r1MLKEM1024
 ...
 OK
 ```
@@ -315,6 +423,8 @@ CONNECTION CLOSED
 
 #### TLS group: SecP256r1MLKEM768
 
+Start TLS server with dual certificates ML-DSA and RSA.
+
 ```
 $ ./pqc.sh start-dual-cert-mldsa-and-rsa-server-SecP256r1MLKEM768
 ...
@@ -333,7 +443,7 @@ Cipher: ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256, 256]
 Then the TLS server prints the following lines.
 
 ```
-$ ./pqc.sh start-dual-cert-server
+$ ./pqc.sh start-dual-cert-mldsa-and-rsa-server-SecP256r1MLKEM768
 ...
 -----BEGIN SSL SESSION PARAMETERS-----
 MIGEAgEBAgIDBAQCEwIEIIBE94AiqaFxk1nEivsGkrPbqMVABZ5VHEn8ZYkhTv2J
@@ -374,6 +484,78 @@ Signature Algorithms: RSA-PSS+SHA256
 Shared Signature Algorithms: RSA-PSS+SHA256
 Supported groups: SecP256r1MLKEM768
 Shared groups: SecP256r1MLKEM768
+CIPHER is TLS_AES_256_GCM_SHA384
+This TLS version forbids renegotiation.
+DONE
+shutting down SSL
+CONNECTION CLOSED
+```
+
+#### TLS group: SecP384r1MLKEM1024
+
+Start TLS server with dual certificates ML-DSA and RSA.
+
+```
+$ ./pqc.sh start-dual-cert-mldsa-and-rsa-server-SecP384r1MLKEM1024
+...
+ACCEPT
+```
+
+Connect to the server with ML-DSA.
+
+```
+$ ruby -I/path/to/ruby/openssl/lib connect.rb mldsa SecP384r1MLKEM1024
+SSL Version: TLSv1.3
+Cert:
+Cipher: ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256, 256]
+```
+
+Then the TLS server prints the following lines.
+
+```
+$ ./pqc.sh start-dual-cert-mldsa-and-rsa-server-SecP384r1MLKEM1024
+...
+-----BEGIN SSL SESSION PARAMETERS-----
+MIGEAgEBAgIDBAQCEwIEIF7TtLdZGuHqGJa0n8gCIpG/PJh4m3oWdfVMaCAjOQB2
+BDAhQcgpdXnTH9JxjS4Cd59ZZH71+fmJCoXlvYVCp4ORKPHFMp3hKOkjsBwoZ6Po
+xwyhBgIEaExA6qIEAgIcIKQGBAQBAAAArgcCBQD2eC3mswQCAhHt
+-----END SSL SESSION PARAMETERS-----
+Shared ciphers:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:DHE-RSA-AES256-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES128-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA
+Signature Algorithms: id-ml-dsa-65:id-ml-dsa-87:id-ml-dsa-44:ECDSA+SHA256:ECDSA+SHA384:ECDSA+SHA512:ed25519:ed448:ecdsa_brainpoolP256r1_sha256:ecdsa_brainpoolP384r1_sha384:ecdsa_brainpoolP512r1_sha512:rsa_pss_pss_sha256:rsa_pss_pss_sha384:rsa_pss_pss_sha512:RSA-PSS+SHA256:RSA-PSS+SHA384:RSA-PSS+SHA512:RSA+SHA256:RSA+SHA384:RSA+SHA512:ECDSA+SHA224:RSA+SHA224:DSA+SHA224:DSA+SHA256:DSA+SHA384:DSA+SHA512
+Shared Signature Algorithms: id-ml-dsa-65:id-ml-dsa-87:id-ml-dsa-44:ECDSA+SHA256:ECDSA+SHA384:ECDSA+SHA512:ed25519:ed448:ecdsa_brainpoolP256r1_sha256:ecdsa_brainpoolP384r1_sha384:ecdsa_brainpoolP512r1_sha512:rsa_pss_pss_sha256:rsa_pss_pss_sha384:rsa_pss_pss_sha512:RSA-PSS+SHA256:RSA-PSS+SHA384:RSA-PSS+SHA512:RSA+SHA256:RSA+SHA384:RSA+SHA512:ECDSA+SHA224:RSA+SHA224
+Supported groups: SecP384r1MLKEM1024
+Shared groups: SecP384r1MLKEM1024
+CIPHER is TLS_AES_256_GCM_SHA384
+This TLS version forbids renegotiation.
+DONE
+shutting down SSL
+CONNECTION CLOSED
+```
+
+Connect to the server with RSA.
+
+```
+$ ruby -I/path/to/ruby/openssl/lib connect.rb rsa SecP384r1MLKEM1024
+SSL Version: TLSv1.3
+Cert:
+Cipher: ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256, 256]
+```
+
+Then the TLS server prints the following lines.
+
+```
+$ ./pqc.sh start-dual-cert-mldsa-and-rsa-server-SecP384r1MLKEM1024
+...
+-----BEGIN SSL SESSION PARAMETERS-----
+MIGDAgEBAgIDBAQCEwIEIN+VbOqQtAcbKOrRjOAElq9B4yXf/RQYHIF8poOsStY+
+BDDSgSnXQyXxpvqODoP7Xwil8FsS/oxp5uttu7aS9XU7EnRvXe49yoPpseC3kOCO
+b+ShBgIEaExBIqIEAgIcIKQGBAQBAAAArgYCBCa9a56zBAICEe0=
+-----END SSL SESSION PARAMETERS-----
+Shared ciphers:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-CHACHA20-POLY1305:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-SHA384:DHE-RSA-AES256-SHA256:ECDHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES128-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA
+Signature Algorithms: RSA-PSS+SHA256
+Shared Signature Algorithms: RSA-PSS+SHA256
+Supported groups: SecP384r1MLKEM1024
+Shared groups: SecP384r1MLKEM1024
 CIPHER is TLS_AES_256_GCM_SHA384
 This TLS version forbids renegotiation.
 DONE
