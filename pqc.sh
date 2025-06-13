@@ -15,8 +15,10 @@ Commands
     start-dual-cert-mldsa-and-rsa-server-X25519MLKEM768.
   * start-dual-cert-mldsa-and-rsa-server-X25519MLKEM768: Start TLS server with
     dual certificates ML-DSA and RSA, and TLS group X25519MLKEM768.
-  * start-dual-cert-mldsa-and-rsa-server-SecP256r1MLKEM768: Start TLS server with
-    dual certificates ML-DSA and RSA, and TLS group SecP256r1MLKEM768.
+  * start-dual-cert-mldsa-and-rsa-server-SecP256r1MLKEM768: Start TLS server
+    with dual certificates ML-DSA and RSA, and TLS group SecP256r1MLKEM768.
+  * start-dual-cert-mldsa-and-rsa-server-SecP384r1MLKEM1024: Start TLS server
+    with dual certificates ML-DSA and RSA, and TLS group SecP384r1MLKEM1024.
   * start-dual-cert-mldsa-and-rsa-pss-server: Start TLS server with dual
     certificates ML-DSA and RSA-PSS.
   * start-mldsa-cert-server: Start TLS server with ML-DSA.
@@ -26,6 +28,8 @@ Commands
     group X25519MLKEM768.
   * connect-mldsa-SecP256r1MLKEM768: Connect to the server with ML-DSA, and TLS
     group SecP256r1MLKEM768.
+  * connect-mldsa-SecP384r1MLKEM1024: Connect to the server with ML-DSA, and TLS
+    group SecP384r1MLKEM1024.
   * connect-mldsa-classic: Connect to the server with ML-DSA and classic key
     exchange.
   * connect-rsa: An alias of connect-rsa-X25519MLKEM768.
@@ -33,6 +37,8 @@ Commands
     X25519MLKEM768.
   * connect-rsa-SecP256r1MLKEM768: Connect to the server with RSA, and TLS group
     SecP256r1MLKEM768.
+  * connect-rsa-SecP384r1MLKEM1024: Connect to the server with RSA, and TLS
+    group SecP384r1MLKEM1024.
   * connect-rsa-classic: Connect to the server with RSA and classic key
     exchange.
   * connect-rsa-pss: Connect to the server with RSA-PSS.
@@ -75,12 +81,20 @@ function start_server_with_cert_mldsa_and_rsa_group_X25519MLKEM768 {
         -dcert localhost-rsa.crt -dkey localhost-rsa.key
 }
 
-# The TLS group Secp256r1mlkem768 is not enabled as a default.
+# The TLS group SecP256r1MLKEM768 is not enabled as a default.
 function start_server_with_cert_mldsa_and_rsa_group_SecP256r1MLKEM768 {
     "${OPENSSL_CLI}" s_server \
         -cert localhost-mldsa.crt -key localhost-mldsa.key \
         -dcert localhost-rsa.crt -dkey localhost-rsa.key \
         -groups "SecP256r1MLKEM768"
+}
+
+# The TLS group SecP384r1MLKEM1024 is not enabled as a default.
+function start_server_with_cert_mldsa_and_rsa_group_SecP384r1MLKEM1024 {
+    "${OPENSSL_CLI}" s_server \
+        -cert localhost-mldsa.crt -key localhost-mldsa.key \
+        -dcert localhost-rsa.crt -dkey localhost-rsa.key \
+        -groups "SecP384r1MLKEM1024"
 }
 
 function start_server_with_cert_mldsa_and_rsa_pss {
@@ -106,12 +120,21 @@ function connect_mldsa_group_X25519MLKEM768 {
         </dev/null
 }
 
-# The TLS group Secp256r1mlkem768 is not enabled as a default.
+# The TLS group SecP256r1MLKEM768 is not enabled as a default.
 function connect_mldsa_group_SecP256r1MLKEM768 {
     "${OPENSSL_CLI}" s_client \
         -connect localhost:4433 \
         -CAfile localhost-mldsa.crt \
         -groups "SecP256r1MLKEM768" \
+        </dev/null
+}
+
+# The TLS group SecP384r1MLKEM1024 is not enabled as a default.
+function connect_mldsa_group_SecP384r1MLKEM1024 {
+    "${OPENSSL_CLI}" s_client \
+        -connect localhost:4433 \
+        -CAfile localhost-mldsa.crt \
+        -groups "SecP384r1MLKEM1024" \
         </dev/null
 }
 
@@ -138,6 +161,15 @@ function connect_rsa_group_SecP256r1MLKEM768 {
         -CAfile localhost-rsa.crt \
         -sigalgs 'rsa_pss_rsae_sha256' \
         -groups "SecP256r1MLKEM768" \
+        </dev/null
+}
+
+function connect_rsa_group_SecP384r1MLKEM1024 {
+    "${OPENSSL_CLI}" s_client \
+        -connect localhost:4433 \
+        -CAfile localhost-rsa.crt \
+        -sigalgs 'rsa_pss_rsae_sha256' \
+        -groups "SecP384r1MLKEM1024" \
         </dev/null
 }
 
@@ -174,6 +206,9 @@ start-dual-cert-mldsa-and-rsa-server-X25519MLKEM768 | start-dual-cert-server)
 start-dual-cert-mldsa-and-rsa-server-SecP256r1MLKEM768)
     start_server_with_cert_mldsa_and_rsa_group_SecP256r1MLKEM768
     ;;
+start-dual-cert-mldsa-and-rsa-server-SecP384r1MLKEM1024)
+    start_server_with_cert_mldsa_and_rsa_group_SecP384r1MLKEM1024
+    ;;
 start-dual-cert-mldsa-and-rsa-pss-server)
     start_server_with_cert_mldsa_and_rsa_pss
     ;;
@@ -189,6 +224,9 @@ connect-mldsa-25519MLKEM768 | connect-mldsa)
 connect-mldsa-SecP256r1MLKEM768)
     connect_mldsa_group_SecP256r1MLKEM768
     ;;
+connect-mldsa-SecP384r1MLKEM1024)
+    connect_mldsa_group_SecP384r1MLKEM1024
+    ;;
 connect-mldsa-classic)
     connect_mldsa_group_classic
     ;;
@@ -197,6 +235,9 @@ connect-rsa-X25519MLKEM768 | connect-rsa)
     ;;
 connect-rsa-SecP256r1MLKEM768)
     connect_rsa_group_SecP256r1MLKEM768
+    ;;
+connect-rsa-SecP384r1MLKEM1024)
+    connect_rsa_group_SecP384r1MLKEM1024
     ;;
 connect-rsa-classic)
     connect_rsa_group_classic
