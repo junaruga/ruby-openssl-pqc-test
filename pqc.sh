@@ -2,7 +2,7 @@
 
 set -eux -o pipefail
 
-OPENSSL_CLI="$HOME/.local/openssl-3.6.0-dev-fips-debug-10bd6fa8ca/bin/openssl"
+OPENSSL_CLI="$HOME/.local/openssl-3.6.0-dev-fips-debug-5876f3f52a/bin/openssl"
 
 function print_usage {
     cat <<EOF
