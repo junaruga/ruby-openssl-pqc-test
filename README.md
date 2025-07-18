@@ -364,7 +364,8 @@ Connect to the server with ML-DSA.
 ```
 $ ruby -I/path/to/ruby/openssl/lib connect.rb mldsa
 SSL Version: TLSv1.3
-Cert:
+Cert: nil
+Peer Cert: #<OpenSSL::PKey::PKey:0x00007f578df546c8 type_name=ML-DSA-65 provider=default>
 Cipher: ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256, 256]
 ```
 
@@ -395,7 +396,8 @@ Connect to the server with RSA.
 ```
 $ ruby -I/path/to/ruby/openssl/lib connect.rb rsa
 SSL Version: TLSv1.3
-Cert:
+Cert: nil
+Peer Cert: #<OpenSSL::PKey::RSA:0x00007ff4702e4660 oid=rsaEncryption type_name=RSA provider=default>
 Cipher: ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256, 256]
 ```
 
@@ -436,7 +438,8 @@ Connect to the server with ML-DSA.
 ```
 $ ruby -I/path/to/ruby/openssl/lib connect.rb mldsa SecP256r1MLKEM768
 SSL Version: TLSv1.3
-Cert:
+Cert: nil
+Peer Cert: #<OpenSSL::PKey::PKey:0x00007f48770f4648 type_name=ML-DSA-65 provider=default>
 Cipher: ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256, 256]
 ```
 
@@ -467,7 +470,8 @@ Connect to the server with RSA.
 ```
 $ ruby -I/path/to/ruby/openssl/lib connect.rb rsa SecP256r1MLKEM768
 SSL Version: TLSv1.3
-Cert:
+Cert: nil
+Peer Cert: #<OpenSSL::PKey::RSA:0x00007fefdaf34630 oid=rsaEncryption type_name=RSA provider=default>
 Cipher: ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256, 256]
 ```
 
@@ -506,7 +510,8 @@ Connect to the server with ML-DSA.
 ```
 $ ruby -I/path/to/ruby/openssl/lib connect.rb mldsa SecP384r1MLKEM1024
 SSL Version: TLSv1.3
-Cert:
+Cert: nil
+Peer Cert: #<OpenSSL::PKey::PKey:0x00007f50a68e4650 type_name=ML-DSA-65 provider=default>
 Cipher: ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256, 256]
 ```
 
@@ -537,7 +542,8 @@ Connect to the server with RSA.
 ```
 $ ruby -I/path/to/ruby/openssl/lib connect.rb rsa SecP384r1MLKEM1024
 SSL Version: TLSv1.3
-Cert:
+Cert: nil
+Peer Cert: #<OpenSSL::PKey::RSA:0x00007f2b47f443a8 oid=rsaEncryption type_name=RSA provider=default>
 Cipher: ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256, 256]
 ```
 

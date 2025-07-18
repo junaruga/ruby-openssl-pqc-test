@@ -55,7 +55,8 @@ begin
   ssl_sock.connect
   # pp ssl_sock
   puts "SSL Version: #{ssl_sock.ssl_version}"
-  puts "Cert: #{ssl_sock.cert}"
+  puts "Cert: #{ssl_sock.cert&.public_key.inspect}"
+  puts "Peer Cert: #{ssl_sock.peer_cert&.public_key.inspect}"
   puts "Cipher: #{ssl_sock.cipher}"
 ensure
   ssl_sock&.close
